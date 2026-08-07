@@ -83,7 +83,7 @@ namespace SimpleDictionary
             Element<Key, Value> FindRemovalTarget()
             {
                 var curr = _content[index];
-                while (curr != null && !EqualityComparer<Key>.Default.Equals(curr.Key, key))
+                while (curr != null && !AreEqual(curr.Key, key))
                 {
                     prev = curr;
                     curr = curr.Next;
@@ -124,11 +124,14 @@ namespace SimpleDictionary
 
             var curr = _content[index];
 
-            while (curr != null && !EqualityComparer<Key>.Default.Equals(curr.Key, key))
+            while (curr != null && !AreEqual(curr.Key, key))
                 curr = curr.Next;
 
             return curr;
         }
+
+        private bool AreEqual<T>(T val1, T val2)
+            => EqualityComparer<T>.Default.Equals(val1, val2);
 
         private void PutAt(int index, Element<Key, Value> newElem, Element<Key, Value>[] array)
         {
