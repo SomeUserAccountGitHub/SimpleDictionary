@@ -95,7 +95,7 @@ namespace SimpleDictionary
             return (hashCode & 0x7fffffff) % size;
         }
 
-        (Element<Key, Value>, Element<Key, Value>) FindRemovalTarget(int index, Key key)
+        (Element<Key, Value>? prev, Element<Key, Value>? curr) FindRemovalTarget(int index, Key key)
         {
             Element<Key, Value>? prev = null;
             var curr = _content[index];
@@ -116,7 +116,7 @@ namespace SimpleDictionary
         }
 
 
-        private Element<Key, Value> Find(Key key)
+        private Element<Key, Value>? Find(Key key)
         {
             var index = GetIndex(key, Capacity);
 
@@ -131,7 +131,7 @@ namespace SimpleDictionary
         private bool AreEqual<T>(T val1, T val2)
             => EqualityComparer<T>.Default.Equals(val1, val2);
 
-        private void PutAt(int index, Element<Key, Value> newElem, Element<Key, Value>[] array)
+        private void PutAt(int index, Element<Key, Value> newElem, Element<Key, Value>?[] array)
         {
             newElem.Next = array[index];
             array[index] = newElem;
