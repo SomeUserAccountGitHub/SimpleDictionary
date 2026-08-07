@@ -107,7 +107,7 @@ namespace SimpleDictionary
             return (prev, curr);
         }
 
-        void Relink(Element<Key, Value> prev, Element<Key, Value> curr, int index)
+        void Relink(Element<Key, Value>? prev, Element<Key, Value> curr, int index)
         {
             if (prev != null)
                 prev.Next = curr.Next;
