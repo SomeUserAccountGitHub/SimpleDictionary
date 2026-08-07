@@ -2,22 +2,20 @@
 
 namespace SimpleDictionary
 {
-
     public class SimpleDictionary<Key, Value>
     {
         private const int INITIAL_SIZE = 2;
-
         private const double HASHING_FILLNESS = 0.5;
         public int Capacity { get; private set; } = INITIAL_SIZE;
+        public int Count { get; private set; } = 0;
 
         private Element<Key, Value>?[] _content;
-
-        public int Count { get; private set; } = 0;
 
         public SimpleDictionary()
         {
             Clear();
         }
+
         public Value this[Key key]
         {
             get => Get(key);
@@ -46,8 +44,6 @@ namespace SimpleDictionary
             value = curr.Value;
             return true;
         }
-
-        
 
         public void Add(Key key, Value value)
         {
@@ -182,6 +178,5 @@ namespace SimpleDictionary
             }
             return res.ToString();
         }
-
     }
 }
