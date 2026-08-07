@@ -25,7 +25,6 @@ namespace SimpleDictionary
             value = default;
 
             var curr = Find(key);
-
             if (curr == null)
                 return false;
 
@@ -59,11 +58,10 @@ namespace SimpleDictionary
             if (Find(key) != null)
                 throw new ArgumentException($"An item with key = {key} already exists");
 
-            if (Count + 1 > Math.Floor(Capacity * HASHING_FILLNESS))
+            if (Count + 1 > Capacity * HASHING_FILLNESS)
                 Resize();
 
             var index = GetIndex(key, Capacity);
-
             var newElem = new Element<Key, Value>(key, value);
             PutAt(index, newElem, _content);
             Count++;
@@ -72,25 +70,35 @@ namespace SimpleDictionary
         public bool Remove(Key key)
         {
             var index = GetIndex(key, Capacity);
-
             Element<Key, Value>? prev = null;
-            var curr = _content[index];
 
-            while (curr != null && !EqualityComparer<Key>.Default.Equals(curr.Key, key))
-            {
-                prev = curr;
-                curr = curr.Next;
-            }
+            var curr = FindRemovalTarget();
             if (curr == null)
                 return false;
 
-            if (prev != null)
-                prev.Next = curr.Next;
-            else
-                _content[index] = curr.Next;
-
+            Relink();
             Count--;
+
             return true;
+
+            Element<Key, Value> FindRemovalTarget()
+            {
+                var curr = _content[index];
+                while (curr != null && !EqualityComparer<Key>.Default.Equals(curr.Key, key))
+                {
+                    prev = curr;
+                    curr = curr.Next;
+                }
+                return curr;
+            }
+
+            void Relink()
+            {
+                if (prev != null)
+                    prev.Next = curr.Next;
+                else
+                    _content[index] = curr.Next;
+            }
         }
 
         public void Clear()
