@@ -16,6 +16,9 @@ Console.WriteLine(simpleDict.ToString());
 simpleDict.Add("4", "cd");
 Console.WriteLine(simpleDict.ToString());
 
+var four = simpleDict["4"];
+Console.WriteLine("four: " + four);
+
 
 simpleDict.Clear();
 Console.WriteLine(simpleDict.ToString());
