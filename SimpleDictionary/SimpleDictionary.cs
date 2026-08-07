@@ -19,22 +19,9 @@ namespace SimpleDictionary
         {
             Clear();
         }
-
-        public bool TryGetValue(Key key, out Value value)
+        public Value this[Key key]
         {
-            value = default;
-
-            var curr = Find(key);
-            if (curr == null)
-                return false;
-
-            value = curr.Value;
-            return true;
-        }
-
-        public Value this[Key key] 
-        { 
-            get => Get(key); 
+            get => Get(key);
             set
             {
                 var curr = Find(key);
@@ -48,6 +35,19 @@ namespace SimpleDictionary
         public Value Get(Key key) => TryGetValue(key, out var res)
             ? res
             : throw new KeyNotFoundException();
+
+        public bool TryGetValue(Key key, out Value value)
+        {
+            value = default;
+
+            var curr = Find(key);
+            if (curr == null)
+                return false;
+
+            value = curr.Value;
+            return true;
+        }
+
         
 
         public void Add(Key key, Value value)
