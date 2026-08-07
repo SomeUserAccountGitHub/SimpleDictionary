@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace SimpleDictionary
 {
@@ -62,40 +63,6 @@ namespace SimpleDictionary
             Count++;
         }
 
-        public bool Remove(Key key)
-        {
-            var index = GetIndex(key, Capacity);
-            Element<Key, Value>? prev = null;
-
-            var curr = FindRemovalTarget();
-            if (curr == null)
-                return false;
-
-            Relink();
-            Count--;
-
-            return true;
-
-            Element<Key, Value> FindRemovalTarget()
-            {
-                var curr = _content[index];
-                while (curr != null && !AreEqual(curr.Key, key))
-                {
-                    prev = curr;
-                    curr = curr.Next;
-                }
-                return curr;
-            }
-
-            void Relink()
-            {
-                if (prev != null)
-                    prev.Next = curr.Next;
-                else
-                    _content[index] = curr.Next;
-            }
-        }
-
         public void Clear()
         {
             _content = new Element<Key, Value>[INITIAL_SIZE];
@@ -103,6 +70,20 @@ namespace SimpleDictionary
             Count = 0;
         }
 
+        public bool Remove(Key key)
+        {
+            var index = GetIndex(key, Capacity);
+
+            var (prev, curr) = FindRemovalTarget(index, key);
+            if (curr == null)
+                return false;
+
+            Relink(prev, curr, index);
+            Count--;
+
+            return true;
+
+        }
         private int GetIndex(Key key, int size)
         {
             if (key == null)
@@ -111,8 +92,29 @@ namespace SimpleDictionary
             //todo: following can be improved so it is stable when restarting an app.
             //In this way, dictionary can be serialized
             var hashCode = key.GetHashCode();
-            return (hashCode & 0x7fffffff) % size; 
+            return (hashCode & 0x7fffffff) % size;
         }
+
+        (Element<Key, Value>, Element<Key, Value>) FindRemovalTarget(int index, Key key)
+        {
+            Element<Key, Value>? prev = null;
+            var curr = _content[index];
+            while (curr != null && !AreEqual(curr.Key, key))
+            {
+                prev = curr;
+                curr = curr.Next;
+            }
+            return (prev, curr);
+        }
+
+        void Relink(Element<Key, Value> prev, Element<Key, Value> curr, int index)
+        {
+            if (prev != null)
+                prev.Next = curr.Next;
+            else
+                _content[index] = curr.Next;
+        }
+
 
         private Element<Key, Value> Find(Key key)
         {
