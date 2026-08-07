@@ -110,7 +110,7 @@ namespace SimpleDictionary
         private int GetIndex(Key key, int size)
         {
             if (key == null)
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
 
             //todo: following can be improved so it is stable when restarting an app.
             //In this way, dictionary can be serialized
