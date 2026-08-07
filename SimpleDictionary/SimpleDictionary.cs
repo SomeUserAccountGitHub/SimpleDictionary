@@ -105,9 +105,9 @@ namespace SimpleDictionary
             if (key == null)
                 throw new ArgumentNullException("key");
 
-            var hashCode = key.GetHashCode();
             //todo: following can be improved so it is stable when restarting an app.
             //In this way, dictionary can be serialized
+            var hashCode = key.GetHashCode();
             return (hashCode & 0x7fffffff) % size; 
         }
 
