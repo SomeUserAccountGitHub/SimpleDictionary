@@ -53,8 +53,8 @@ namespace SimpleDictionary
 
         public void Add(Key key, Value value)
         {
-            var hashCode = key.GetHashCode();
-            Console.WriteLine($"hashcode for key={key}: {hashCode}");
+            //var hashCode = key.GetHashCode();
+            //Console.WriteLine($"hashcode for key={key}: {hashCode}");
 
             if (Find(key) != null)
                 throw new ArgumentException($"An item with key = {key} already exists");
