@@ -141,22 +141,22 @@ namespace SimpleDictionary
         {
             if (Capacity >= int.MaxValue / 2)
                 throw new Exception("Max capacity reached");
-            var doubleSize = Capacity * 2;
-            var newContent = new Element<Key, Value>[doubleSize];
+            var doubleCapacity = Capacity * 2;
+            var newContent = new Element<Key, Value>[doubleCapacity];
             for (var i = 0; i < _content.Length; i++)
             {
                 ProcessResizeAt(i);
             }
 
             _content = newContent;
-            Capacity = doubleSize;
+            Capacity = doubleCapacity;
 
             void ProcessResizeAt(int ind)
             {
                 var current = _content[ind];
                 while (current != null)
                 {
-                    var newInd = GetIndex(current.Key, doubleSize);
+                    var newInd = GetIndex(current.Key, doubleCapacity);
                     var next = current.Next;
                     current.Next = null;
                     PutAt(newInd, current, newContent);
