@@ -12,9 +12,12 @@ namespace SimpleDictionary
 
         private Element<Key, Value>?[] _content;
 
-        public SimpleDictionary()
+        public SimpleDictionary() => Clear();
+        public void Clear()
         {
-            Clear();
+            _content = new Element<Key, Value>[INITIAL_SIZE];
+            Capacity = INITIAL_SIZE;
+            Count = 0;
         }
 
         public Value this[Key key]
@@ -63,12 +66,6 @@ namespace SimpleDictionary
             Count++;
         }
 
-        public void Clear()
-        {
-            _content = new Element<Key, Value>[INITIAL_SIZE];
-            Capacity = INITIAL_SIZE;
-            Count = 0;
-        }
 
         public bool Remove(Key key)
         {
