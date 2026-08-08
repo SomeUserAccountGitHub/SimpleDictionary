@@ -12,7 +12,9 @@ namespace SimpleDictionary
 
         private Element<Key, Value>?[] _content;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public SimpleDictionary() => Clear();
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public void Clear()
         {
             _content = new Element<Key, Value>[INITIAL_SIZE];
@@ -39,7 +41,9 @@ namespace SimpleDictionary
 
         public bool TryGetValue(Key key, out Value value)
         {
+#pragma warning disable CS8601 // Possible null reference assignment.
             value = default;
+#pragma warning restore CS8601 // Possible null reference assignment.
 
             var curr = Find(key);
             if (curr == null)
