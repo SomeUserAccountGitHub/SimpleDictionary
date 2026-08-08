@@ -52,7 +52,7 @@ namespace SimpleDictionary
             //Console.WriteLine($"hashcode for key={key}: {hashCode}");
 
             if (Find(key) != null)
-                throw new ArgumentException($"An item with key = {key} already exists");
+                throw new ArgumentException($"An item with key = {key?.ToString()} already exists");
 
             if (Count + 1 > Capacity * HASHING_FILLNESS)
                 Resize();
@@ -84,13 +84,13 @@ namespace SimpleDictionary
             return true;
 
         }
-        private int GetIndex(Key key, int size)
+        private static int GetIndex(Key key, int size)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
             //todo: following can be improved so it is stable when restarting an app.
-            //In this way, dictionary can be serialized
+            //In that way, dictionary can be serialized
             var hashCode = key.GetHashCode();
             return (hashCode & 0x7fffffff) % size;
         }
@@ -128,10 +128,10 @@ namespace SimpleDictionary
             return curr;
         }
 
-        private bool AreEqual<T>(T val1, T val2)
+        private static bool AreEqual<T>(T val1, T val2)
             => EqualityComparer<T>.Default.Equals(val1, val2);
 
-        private void PutAt(int index, Element<Key, Value> newElem, Element<Key, Value>?[] array)
+        private static void PutAt(int index, Element<Key, Value> newElem, Element<Key, Value>?[] array)
         {
             newElem.Next = array[index];
             array[index] = newElem;
@@ -144,9 +144,7 @@ namespace SimpleDictionary
             var doubleCapacity = Capacity * 2;
             var newContent = new Element<Key, Value>[doubleCapacity];
             for (var i = 0; i < _content.Length; i++)
-            {
                 ProcessResizeAt(i);
-            }
 
             _content = newContent;
             Capacity = doubleCapacity;

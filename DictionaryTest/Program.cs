@@ -44,9 +44,9 @@ Console.WriteLine(simpleDict.ToString());
 simpleDict.Remove("5");
 Console.WriteLine(simpleDict.ToString());
 var removed = simpleDict.Remove("8");
-Console.WriteLine("removed: " + removed.ToString());
+Console.WriteLine("removed 8: " + removed.ToString());
 Console.WriteLine(simpleDict.ToString());
 
 removed = simpleDict.Remove("8");
-Console.WriteLine("removed: " + removed.ToString());
+Console.WriteLine("removed 8: " + removed.ToString());
 Console.WriteLine(simpleDict.ToString());
