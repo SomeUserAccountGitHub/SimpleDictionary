@@ -1,0 +1,1 @@
+This is an implementation of a simple dictionary that had to be implemented as a task in hiring process for one company. Tests and thread-safety wasn't required in the task.
